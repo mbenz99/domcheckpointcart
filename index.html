@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panier d'achat</title>
+  <style>
+    .item {
+      margin-bottom: 10px;
+    }
+    .heart {
+      cursor: pointer;
+    }
+    .liked {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cart">
+    <div class="item" data-price="20" data-quantity="2">
+      <span>Nom de l'article 1</span>
+      <button class="quantity-btn" onclick="changeQuantity(this, 'decrease')">-</button>
+      <span class="quantity">2</span>
+      <button class="quantity-btn" onclick="changeQuantity(this, 'increase')">+</button>
+      <button class="like-btn heart" onclick="toggleLike(this)">❤️</button>
+      <button class="remove-btn" onclick="removeItem(this)">Supprimer</button>
+    </div>
+    
+    <div class="item" data-price="30" data-quantity="1">
+      <span>Nom de l'article 2</span>
+      <button class="quantity-btn" onclick="changeQuantity(this, 'decrease')">-</button>
+      <span class="quantity">1</span>
+      <button class="quantity-btn" onclick="changeQuantity(this, 'increase')">+</button>
+      <button class="like-btn heart" onclick="toggleLike(this)">❤️</button>
+      <button class="remove-btn" onclick="removeItem(this)">Supprimer</button>
+    </div>
+  </div>
+
+  <p id="total-price">Prix total : $0</p>
+
+  <script>
+    function changeQuantity(button, action) {
+      const item = button.parentElement;
+      const quantityElement = item.querySelector('.quantity');
+      let quantity = parseInt(quantityElement.textContent);
+
+      if (action === 'increase') {
+        quantity++;
+      } else if (action === 'decrease' && quantity > 1) {
+        quantity--;
+      }
+
+      quantityElement.textContent = quantity;
+      updateTotalPrice();
+    }
+
+    function removeItem(button) {
+      const item = button.parentElement;
+      item.remove();
+      updateTotalPrice();
+    }
+
+    function toggleLike(button) {
+      button.classList.toggle('liked');
+    }
+
+    function updateTotalPrice() {
+      const items = document.querySelectorAll('.item');
+      let totalPrice = 0;
+
+      items.forEach(item => {
+        const price = parseInt(item.getAttribute('data-price'));
+        const quantity = parseInt(item.querySelector('.quantity').textContent);
+        totalPrice += price * quantity;
+      });
+
+      document.getElementById('total-price').textContent = `Prix total : $${totalPrice}`;
+    }
+  </script>
+</body>
+</html>
