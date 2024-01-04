@@ -1,83 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panier d'achat</title>
-  <style>
-    .item {
-      margin-bottom: 10px;
-    }
-    .heart {
-      cursor: pointer;
-    }
-    .liked {
-      color: red;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algo & DOM</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div id="cart">
-    <div class="item" data-price="20" data-quantity="2">
-      <span>Nom de l'article 1</span>
-      <button class="quantity-btn" onclick="changeQuantity(this, 'decrease')">-</button>
-      <span class="quantity">2</span>
-      <button class="quantity-btn" onclick="changeQuantity(this, 'increase')">+</button>
-      <button class="like-btn heart" onclick="toggleLike(this)">❤️</button>
-      <button class="remove-btn" onclick="removeItem(this)">Supprimer</button>
+    <div id="root">
+
+
     </div>
-    
-    <div class="item" data-price="30" data-quantity="1">
-      <span>Nom de l'article 2</span>
-      <button class="quantity-btn" onclick="changeQuantity(this, 'decrease')">-</button>
-      <span class="quantity">1</span>
-      <button class="quantity-btn" onclick="changeQuantity(this, 'increase')">+</button>
-      <button class="like-btn heart" onclick="toggleLike(this)">❤️</button>
-      <button class="remove-btn" onclick="removeItem(this)">Supprimer</button>
-    </div>
-  </div>
 
-  <p id="total-price">Prix total : $0</p>
+    <script>
 
-  <script>
-    function changeQuantity(button, action) {
-      const item = button.parentElement;
-      const quantityElement = item.querySelector('.quantity');
-      let quantity = parseInt(quantityElement.textContent);
+        let MonTableauMedium2 = [
+            {
+                ProductName: 'Baggy Bag',
+                ProuctDesc: 'Beautiful leather bag',
+                imgaeUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIo16XoR-mZa4IScAFcIEdW1bKOTFXSTszkafK5-gEMg&s',
+                Colors: [
+                    'red', 'blue', 'white'
+                ]
+            },
 
-      if (action === 'increase') {
-        quantity++;
-      } else if (action === 'decrease' && quantity > 1) {
-        quantity--;
-      }
+            {
+                ProductName: 'Boogy Bag',
+                ProuctDesc: 'Beautiful Boogy Bag',
+                imgaeUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFy7W6bOZ65kmRBE4xurWh-WLRZIZClA3tn6fuHw6jIw&s',
+                Colors: [
+                    'red', 'pink', 'purple'
+                ]
+            },
 
-      quantityElement.textContent = quantity;
-      updateTotalPrice();
-    }
+            {
+                ProductName: 'Browny Bag',
+                ProuctDesc: 'Beautiful Browny Bag',
+                imgaeUrl: 'https://cdn.shopify.com/s/files/1/0779/4683/files/Back_2_The_50_s.jpg?v=1622470423',
+                Colors: [
+                    'red', 'pink', 'purple'
+                ]
+            },
+        ]
 
-    function removeItem(button) {
-      const item = button.parentElement;
-      item.remove();
-      updateTotalPrice();
-    }
+        let MonStore = document.getElementById('root')
 
-    function toggleLike(button) {
-      button.classList.toggle('liked');
-    }
+        MonTableauMedium2.forEach((item, index) => {
+            let MaCarteProduit = document.createElement('div')
+            MaCarteProduit.setAttribute('class', 'MaCarteProduit')
+            // MaCarteProduit.setAttribute('id', 'MaCarteProduit' + index)
 
-    function updateTotalPrice() {
-      const items = document.querySelectorAll('.item');
-      let totalPrice = 0;
+            let SmiyaDyalProduitDyali = document.createElement('h2')
+            SmiyaDyalProduitDyali.innerHTML = item.ProductName
 
-      items.forEach(item => {
-        const price = parseInt(item.getAttribute('data-price'));
-        const quantity = parseInt(item.querySelector('.quantity').textContent);
-        totalPrice += price * quantity;
-      });
+            let MonImagedeproduit = document.createElement('img')
+            MonImagedeproduit.setAttribute('src', item.imgaeUrl)
 
-      document.getElementById('total-price').textContent = `Prix total : $${totalPrice}`;
-    }
-  </script>
+            let listcolors = document.createElement("ul")
+            item.Colors.forEach((col) => {
+                let couleur = document.createElement("li")
+                couleur.innerHTML = col
+                couleur.style.color = col
+                listcolors.appendChild(couleur)
+            })
+
+
+            let DescDyalProduitDyali = document.createElement('h3')
+
+            DescDyalProduitDyali.innerHTML = item.ProuctDesc
+
+
+            MaCarteProduit.appendChild(SmiyaDyalProduitDyali)
+            MaCarteProduit.appendChild(MonImagedeproduit)
+            MaCarteProduit.appendChild(DescDyalProduitDyali)
+            MaCarteProduit.appendChild(listcolors)
+
+            MonStore.appendChild(MaCarteProduit)
+
+
+        })
+
+
+
+
+
+    </script>
+
 </body>
+
 </html>
